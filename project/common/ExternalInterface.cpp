@@ -17,8 +17,10 @@ using namespace menubar;
 static void setListener(value cb) {}
 DEFINE_PRIM (setListener, 1);
 
-static void addMenuItem(value path) {
-    
+static value addMenuItem(value path) {
+    const char * str = val_get_string(path);
+    int r = AddMenuItem(str);
+    return alloc_int(r);
 }
 DEFINE_PRIM (addMenuItem, 1);
 

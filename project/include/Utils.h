@@ -3,11 +3,8 @@
 
 
 namespace menubar {
-	
-	
 	int SampleMethod(int inputValue);
-	
-	
+    int AddMenuItem(const char * );
 }
 
 

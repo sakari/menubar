@@ -34,6 +34,7 @@ class Menubar {
   }
 
   public function add(path: String) {
+    trace('adding $path');
     var i = addMenuItem(path);
     paths[path] = i;
     indexToPath[i] = path;

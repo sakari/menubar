@@ -14,6 +14,43 @@
 
 namespace menubar {
 
+  static int freeTagIndex = 123;
+
+  int AddMenuItemHelper(NSArray * parts, int index, NSMenu * parent) {
+    NSString * title = [parts objectAtIndex: index];
+    NSMenuItem * item = [parent itemWithTitle: title];
+    NSMenu * submenu;
+
+
+    NSLog(@"adding item %@", title);
+    if(!item) {
+      item = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
+		  initWithTitle:title action:NULL keyEquivalent:@""];
+      [parent addItem: item];
+    }
+    
+    if([parts count] <= index + 1) {
+      [item setTag: freeTagIndex];
+      [item release];
+      return freeTagIndex++;
+    }
+
+    submenu = [[NSMenu allocWithZone:[NSMenu menuZone]]
+		  initWithTitle: title];
+    [item setSubmenu: submenu];
+    [item release];
+    int tag = AddMenuItemHelper(parts, index + 1, submenu);
+    [submenu release];
+    return tag;
+  }
+
+  int AddMenuItem(const char * path) {
+    NSArray * parts = [[NSString stringWithFormat:@"%s" , path]
+			componentsSeparatedByString: @"/"];
+    NSMenu * main = [NSApp mainMenu];
+    return AddMenuItemHelper(parts, 0, main);
+  }
+
   int SampleMethod(int inputValue) {
     NSMenu *newMenu;
     NSMenuItem *newItem;
