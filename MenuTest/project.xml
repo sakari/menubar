@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="MenuTest" package="com.example.menutest" version="1.0.0" company="Company Name" />
+	<app main="Main" path="Export" file="MenuTest" />
+	<source path="Source" />
+	<haxelib name="openfl" />
+	<haxelib name="menubar" />
+	<assets path="Assets" rename="assets" exclude="openfl.svg" />
+	<icon path="Assets/openfl.svg" />
+	
+</project>
