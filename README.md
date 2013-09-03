@@ -4,6 +4,13 @@ Create menus to the main menubar of the application from openfl.
 
 Supports only OSX now as I don't have any other platforms. Pull request welcome.
 
+## Features
+
+ * nested menus
+ * disabling/enabling items
+ * item states (on, off, mixed)
+
+See the test app at `MenuTest/Source/Main.hx` for details
 ## Usage
 
     import sakari.menubar.Menubar;
@@ -21,7 +28,7 @@ Supports only OSX now as I don't have any other platforms. Pull request welcome.
     make
 
 ## Building the test app
-
+    
     make test
 
 ## License

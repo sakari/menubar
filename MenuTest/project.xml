@@ -4,7 +4,7 @@
 	<app main="Main" path="Export" file="MenuTest" />
 	<source path="Source" />
 	<haxelib name="openfl" />
-	<haxelib name="menubar" />
+	<source path=".." />
 	<assets path="Assets" rename="assets" exclude="openfl.svg" />
 	<icon path="Assets/openfl.svg" />
 	

@@ -33,28 +33,50 @@ class Menubar {
         return instance;
     }
     
-    public function add(path: String, ?shortcut: String) {
+    public function add(path: String, ?shortcut: String): Menubar {
         var i = addMenuItem(path, shortcut);
         paths[path] = i;
         indexToPath[i] = path;
+        return this;
     }
     
-    public function enable(path: String) {
+    public function on(path: String): Menubar {
+        onItem(path);
+        return this;
+    }
+
+    public function off(path: String): Menubar {
+        offItem(path);
+        return this;
+    }
+
+    public function mixed(path: String): Menubar {
+        mixedItem(path);
+        return this;
+    }
+    
+    public function enable(path: String): Menubar {
         var i = paths[path];
         enableItem(i);
+        return this;
     }
     
-    public function disable(path: String) {
+    public function disable(path: String): Menubar {
         var i = paths[path];
         disableItem(i);
+        return this;
     }
     
-    public function listen(path: String, cb: Void -> Void) {
+    public function listen(path: String, cb: Void -> Void): Menubar {
         listeners[path] = cb;
+        return this;
     }
     
     private static var setListener = Lib.load ("menubar", "setListener", 1);
     private static var addMenuItem = Lib.load ("menubar", "addMenuItem", 2);
     private static var enableItem = Lib.load ("menubar", "enableItem", 1);
     private static var disableItem = Lib.load ("menubar", "disableItem", 1);
+    private static var offItem = Lib.load ("menubar", "offItem", 1);
+    private static var onItem = Lib.load ("menubar", "onItem", 1);
+    private static var mixedItem = Lib.load ("menubar", "mixedItem", 1);
 }

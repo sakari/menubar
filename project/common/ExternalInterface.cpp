@@ -35,6 +35,21 @@ static value addMenuItem(value path, value shortcut) {
 }
 DEFINE_PRIM (addMenuItem, 2);
 
+static void onItem(value path) {
+    OnItem(val_get_string(path));
+}
+DEFINE_PRIM (onItem, 1);
+
+static void offItem(value path) {
+    OffItem(val_get_string(path));
+}
+DEFINE_PRIM (offItem, 1);
+
+static void mixedItem(value path) {
+    MixedItem(val_get_string(path));
+}
+DEFINE_PRIM (mixedItem, 1);
+
 static void enableItem(value tag) {
     EnableItem(val_get_int(tag));
 }

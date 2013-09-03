@@ -1,7 +1,7 @@
 #import "Utils.h"
 #import <AppKit/NSApplication.h>
 #import <AppKit/NSMenu.h>
-
+#import <AppKit/NSCell.h>
 typedef void (*Callback)(int tag);
 
 @interface Target : NSObject { 
@@ -105,6 +105,55 @@ namespace menubar {
     [target disable: tag];
   }
 
+  NSMenuItem * GetItemHelper(NSArray * parts, int index, NSMenu * parent) {
+    NSString * title = [parts objectAtIndex: index];
+    NSMenuItem * item = [parent itemWithTitle: title];
+    NSMenu * submenu;
+    
+    if(!item) {
+      return nil;
+    }
+    
+    if([parts count] <= index + 1) {
+      return item;
+    }
+    
+    submenu = [item submenu];
+    if(!submenu) {
+      return nil;
+    }
+    item = GetItemHelper(parts, index + 1, submenu);
+    return item;    
+  }
+  
+  NSMenuItem * GetItem(const char * path) {
+    NSArray * parts = [[NSString stringWithFormat:@"%s", path]
+      componentsSeparatedByString: @"/"];
+    NSMenu * main = [NSApp mainMenu];
+    NSMenuItem * item = GetItemHelper(parts, 0, main);
+    return item;
+  }
+  
+  void SetState(const char * path, NSInteger state) {
+    NSMenuItem * item = GetItem(path);
+    if(!item) {
+      return;
+    }
+    [item setState: state];
+  }
+
+  void OnItem(const char * path) {
+    SetState(path, NSOnState);
+  }
+
+  void MixedItem(const char * path) {
+    SetState(path, NSMixedState);
+  }
+
+  void OffItem(const char * path) {
+    SetState(path, NSOffState);
+  }
+
   int AddMenuItem(const char * path, const char * shortcut) {
     NSString * key = shortcut ? 
       [NSString stringWithFormat:@"%s", shortcut] : @"";
@@ -112,41 +161,5 @@ namespace menubar {
 			componentsSeparatedByString: @"/"];
     NSMenu * main = [NSApp mainMenu];
     return AddMenuItemHelper(parts, 0, main, key);
-  }
-
-  int SampleMethod(int inputValue) {
-    NSMenu *newMenu;
-    NSMenuItem *newItem;
-    NSMenuItem * submenuItem;
-    Target * target;
-
-    target = [[Target alloc] init];
-
-    submenuItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
-		    initWithTitle:@"Item" action:NULL keyEquivalent:@""];
-
-    [submenuItem setTag: 123];
-    [submenuItem setEnabled: true];
-    [submenuItem setTarget: target];
-    [submenuItem setAction: @selector(selected:)];
-
-    newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
-		initWithTitle:@"Flashy" action:NULL keyEquivalent:@""];
-    [newItem setEnabled: true];
-
-    newMenu = [[NSMenu allocWithZone:[NSMenu menuZone]]
-		initWithTitle:@"Flashy"];
-    [newMenu setAutoenablesItems: NO];
-    [newMenu addItem: submenuItem];
-
-    [submenuItem release];
-
-    [newItem setSubmenu:newMenu];
-    [newMenu release];
-
-    [[NSApp mainMenu] addItem:newItem];
-    [newItem release];
-
-    return inputValue * 100;
   }
 }
