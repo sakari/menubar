@@ -4,6 +4,6 @@ ndll:
 test: ndll
 	cd MenuTest && openfl test cpp -debug -Ddebug
 
-all: test
+all: ndll
 
 .PHONY: ndll test all
