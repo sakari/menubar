@@ -66,7 +66,7 @@ namespace menubar {
     NSString * title = [parts objectAtIndex: index];
     NSMenuItem * item = [parent itemWithTitle: title];
     NSMenu * submenu;
-    
+
     if(!target)  {
       target = [[Target alloc] init];
     }
@@ -81,16 +81,16 @@ namespace menubar {
       [item setTag: freeTagIndex];
       [item setTarget: target];
       [item setAction: @selector(selected:)];
-      [item release];
       return freeTagIndex++;
     }
-
-    submenu = [[NSMenu allocWithZone:[NSMenu menuZone]]
+    
+    submenu = [item submenu];
+    if(!submenu) {
+      submenu = [[NSMenu allocWithZone:[NSMenu menuZone]]
 		  initWithTitle: title];
-    [item setSubmenu: submenu];
-    [item release];
+      [item setSubmenu: submenu];
+    }
     int tag = AddMenuItemHelper(parts, index + 1, submenu);
-    [submenu release];
     return tag;
   }
 
