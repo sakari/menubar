@@ -13,8 +13,18 @@
 
 using namespace menubar;
 
+value * listener;
 
-static void setListener(value cb) {}
+
+static void callback(int tag) {
+    val_call1(*listener, alloc_int(tag));
+}
+
+static void setListener(value cb) {
+    listener = alloc_root();
+    *listener = cb;
+    SetListener(callback);
+}
 DEFINE_PRIM (setListener, 1);
 
 static value addMenuItem(value path) {
@@ -29,7 +39,9 @@ static void enableItem(value tag) {
 }
 DEFINE_PRIM (enableItem, 1);
 
-static void disableItem(value tag) {}
+static void disableItem(value tag) {
+    DisableItem(val_get_int(tag));
+}
 DEFINE_PRIM (disableItem, 1);
 
 static value menubar_sample_method (value inputValue) {

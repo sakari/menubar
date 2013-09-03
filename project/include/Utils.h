@@ -6,7 +6,8 @@ namespace menubar {
 	int SampleMethod(int inputValue);
     int AddMenuItem(const char * path);
     void EnableItem(int tag );
-    void DisbaleItem(int tag);
+    void DisableItem(int tag);
+    void SetListener(void (*cb)(int));
 }
 
 

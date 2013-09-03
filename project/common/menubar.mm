@@ -2,30 +2,41 @@
 #import <AppKit/NSApplication.h>
 #import <AppKit/NSMenu.h>
 
+typedef void (*Callback)(int tag);
+
 @interface Target : NSObject { 
-  NSMutableSet * _foo;
   NSMutableIndexSet * _enabledTags;
+  Callback _cb;
 }
 
 -(void)selected:(id) sender;
 -(void)enable:(int) tag;
 -(void)disable:(int) tag;
+-(Target*)setListener:(Callback) cb;
 @end
 
 @implementation Target {
-  NSMutableSet * _foo;
   NSMutableIndexSet * _enabledTags;
+  Callback _cb;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item {
+  return [_enabledTags containsIndex: [item tag]];
 }
 
 -(id)init {
   self = [super init];
   _enabledTags = [NSMutableIndexSet indexSet];
-  _foo = [NSMutableSet set];
   return self;
 }
 
+-(Target*)setListener:(Callback) cb {
+  _cb = cb;
+}
+
 -(void)selected:(id) sender {
-  NSLog(@"foofoo %d", [sender tag]);
+  if(!_cb) return;
+  _cb([sender tag]);
 }
 
 -(void)enable:(int) tag {
@@ -41,6 +52,15 @@ namespace menubar {
 
   static int freeTagIndex = 123;
   static Target * target;
+  static void (^callback) (int);
+
+  void SetListener(Callback cb) {
+    if(!target)  {
+      target = [[Target alloc] init];
+    }
+
+    [target setListener: cb];
+  }
 
   int AddMenuItemHelper(NSArray * parts, int index, NSMenu * parent) {
     NSString * title = [parts objectAtIndex: index];
@@ -49,10 +69,8 @@ namespace menubar {
     
     if(!target)  {
       target = [[Target alloc] init];
-      //[target make];
     }
 
-    NSLog(@"adding item %@", title);
     if(!item) {
       item = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
 		  initWithTitle:title action:NULL keyEquivalent:@""];
