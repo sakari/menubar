@@ -24,10 +24,12 @@ static value addMenuItem(value path) {
 }
 DEFINE_PRIM (addMenuItem, 1);
 
-static void enableItem(value path) {}
+static void enableItem(value tag) {
+    EnableItem(val_get_int(tag));
+}
 DEFINE_PRIM (enableItem, 1);
 
-static void disableItem(value path) {}
+static void disableItem(value tag) {}
 DEFINE_PRIM (disableItem, 1);
 
 static value menubar_sample_method (value inputValue) {

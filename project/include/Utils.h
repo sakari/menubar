@@ -4,7 +4,9 @@
 
 namespace menubar {
 	int SampleMethod(int inputValue);
-    int AddMenuItem(const char * );
+    int AddMenuItem(const char * path);
+    void EnableItem(int tag );
+    void DisbaleItem(int tag);
 }
 
 
