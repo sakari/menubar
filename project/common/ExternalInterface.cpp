@@ -27,12 +27,13 @@ static void setListener(value cb) {
 }
 DEFINE_PRIM (setListener, 1);
 
-static value addMenuItem(value path) {
+static value addMenuItem(value path, value shortcut) {
     const char * str = val_get_string(path);
-    int r = AddMenuItem(str);
+    const char * key = val_is_null(shortcut) ? NULL : val_get_string(shortcut);
+    int r = AddMenuItem(str, key);
     return alloc_int(r);
 }
-DEFINE_PRIM (addMenuItem, 1);
+DEFINE_PRIM (addMenuItem, 2);
 
 static void enableItem(value tag) {
     EnableItem(val_get_int(tag));
@@ -43,16 +44,6 @@ static void disableItem(value tag) {
     DisableItem(val_get_int(tag));
 }
 DEFINE_PRIM (disableItem, 1);
-
-static value menubar_sample_method (value inputValue) {
-	
-	int returnValue = SampleMethod(val_int(inputValue));
-	return alloc_int(returnValue);
-	
-}
-DEFINE_PRIM (menubar_sample_method, 1);
-
-
 
 extern "C" void menubar_main () {}
 DEFINE_ENTRY_POINT (menubar_main);

@@ -7,13 +7,17 @@ class Main extends Sprite {
 	public function new () {
 		super ();
 		var menu = Menubar.get();
-		menu.add('Foo/Bar');
+		menu.add('Foo/Bar', 'a');
 		menu.add('Foo/Buz');
 		menu.enable('Foo/Bar');
 		menu.listen('Foo/Bar', function() {
-		    trace('clicked');
 		    menu.disable('Foo/Bar');
-		    menu.add('Foo/Buz');
+		    menu.enable('Foo/Buz');
 		  });
+		menu.listen('Foo/Buz', function() {
+		    menu.disable('Foo/Buz');
+		    menu.enable('Foo/Bar');
+		  });
+
 	}
 }

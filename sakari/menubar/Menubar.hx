@@ -33,9 +33,8 @@ class Menubar {
         return instance;
     }
     
-    public function add(path: String) {
-        trace('adding $path');
-        var i = addMenuItem(path);
+    public function add(path: String, ?shortcut: String) {
+        var i = addMenuItem(path, shortcut);
         paths[path] = i;
         indexToPath[i] = path;
     }
@@ -54,13 +53,8 @@ class Menubar {
         listeners[path] = cb;
     }
     
-    public static function sampleMethod (inputValue:Int):Int {
-        return menubar_sample_method(inputValue);
-    }
-    
     private static var setListener = Lib.load ("menubar", "setListener", 1);
-    private static var addMenuItem = Lib.load ("menubar", "addMenuItem", 1);
+    private static var addMenuItem = Lib.load ("menubar", "addMenuItem", 2);
     private static var enableItem = Lib.load ("menubar", "enableItem", 1);
     private static var disableItem = Lib.load ("menubar", "disableItem", 1);
-    private static var menubar_sample_method = Lib.load ("menubar", "menubar_sample_method", 1);
 }

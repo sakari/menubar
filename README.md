@@ -9,7 +9,7 @@ Supports only OSX now as I don't have any other platforms. Pull request welcome.
     import sakari.menubar.Menubar;
     ..
     var m = Menubar.get()
-    m.add('Foo/Bar');
+    m.add('Foo/Bar', 'a'); //use 'a' as shortcut key
     m.enable('Foo/Bar');
     m.listen('Foo/Bar', function() {
         trace('Foo/Bar was clicked, will disable it now');

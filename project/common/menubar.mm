@@ -62,7 +62,7 @@ namespace menubar {
     [target setListener: cb];
   }
 
-  int AddMenuItemHelper(NSArray * parts, int index, NSMenu * parent) {
+  int AddMenuItemHelper(NSArray * parts, int index, NSMenu * parent, NSString * shortcut) {
     NSString * title = [parts objectAtIndex: index];
     NSMenuItem * item = [parent itemWithTitle: title];
     NSMenu * submenu;
@@ -73,7 +73,9 @@ namespace menubar {
 
     if(!item) {
       item = [[NSMenuItem allocWithZone:[NSMenu menuZone]]
-		  initWithTitle:title action:NULL keyEquivalent:@""];
+		  initWithTitle:title 
+			 action:NULL
+		  keyEquivalent:@""];
       [parent addItem: item];
     }
     
@@ -81,6 +83,7 @@ namespace menubar {
       [item setTag: freeTagIndex];
       [item setTarget: target];
       [item setAction: @selector(selected:)];
+      [item setKeyEquivalent: shortcut];
       return freeTagIndex++;
     }
     
@@ -90,7 +93,7 @@ namespace menubar {
 		  initWithTitle: title];
       [item setSubmenu: submenu];
     }
-    int tag = AddMenuItemHelper(parts, index + 1, submenu);
+    int tag = AddMenuItemHelper(parts, index + 1, submenu, shortcut);
     return tag;
   }
 
@@ -102,11 +105,13 @@ namespace menubar {
     [target disable: tag];
   }
 
-  int AddMenuItem(const char * path) {
+  int AddMenuItem(const char * path, const char * shortcut) {
+    NSString * key = shortcut ? 
+      [NSString stringWithFormat:@"%s", shortcut] : @"";
     NSArray * parts = [[NSString stringWithFormat:@"%s" , path]
 			componentsSeparatedByString: @"/"];
     NSMenu * main = [NSApp mainMenu];
-    return AddMenuItemHelper(parts, 0, main);
+    return AddMenuItemHelper(parts, 0, main, key);
   }
 
   int SampleMethod(int inputValue) {

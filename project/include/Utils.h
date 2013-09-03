@@ -3,8 +3,7 @@
 
 
 namespace menubar {
-	int SampleMethod(int inputValue);
-    int AddMenuItem(const char * path);
+    int AddMenuItem(const char * path, const char * shortcut);
     void EnableItem(int tag );
     void DisableItem(int tag);
     void SetListener(void (*cb)(int));
