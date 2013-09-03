@@ -14,6 +14,19 @@
 using namespace menubar;
 
 
+static void setListener(value cb) {}
+DEFINE_PRIM (setListener, 1);
+
+static void addMenuItem(value path) {
+    
+}
+DEFINE_PRIM (addMenuItem, 1);
+
+static void enableItem(value path) {}
+DEFINE_PRIM (enableItem, 1);
+
+static void disableItem(value path) {}
+DEFINE_PRIM (disableItem, 1);
 
 static value menubar_sample_method (value inputValue) {
 	
