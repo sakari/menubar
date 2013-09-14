@@ -19,7 +19,9 @@ class MenubarTest {
         var h = f.createHandler(this, function() {}, 1000);
         menu.add('Test/Disabled/Click')
             .disable('Test/Disabled/Click')
-            .listen('Test/Disabled/Click', function() { throw 'should not happen'; })
+            .listen('Test/Disabled/Click', function() { 
+                    throw 'should not happen'; 
+                })
             .click('Test/Disabled/Click');
         Timer.delay(h, 500);
     }
