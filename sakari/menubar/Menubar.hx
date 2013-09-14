@@ -27,16 +27,26 @@ class Menubar {
                 cb();
             });
     }
+
+    public function click(path: String): Menubar {
+        clickItem(path);
+        return this;
+    }
     
     public static function get(): Menubar {
         if(instance == null) instance = new Menubar();
         return instance;
     }
     
-    public function add(path: String, ?shortcut: String): Menubar {
+    public function add(path: String, ?shortcut: String, ?enabled, ?cb): Menubar {
         var i = addMenuItem(path, shortcut);
         paths[path] = i;
         indexToPath[i] = path;
+        if(enabled != null)
+            enable(path);
+        if(cb != null)
+            listen(path, cb);
+                
         return this;
     }
     
@@ -72,6 +82,7 @@ class Menubar {
         return this;
     }
     
+    private static var clickItem = Lib.load("menubar", "clickItem", 1);
     private static var setListener = Lib.load ("menubar", "setListener", 1);
     private static var addMenuItem = Lib.load ("menubar", "addMenuItem", 2);
     private static var enableItem = Lib.load ("menubar", "enableItem", 1);

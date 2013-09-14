@@ -6,6 +6,7 @@ namespace menubar {
     int AddMenuItem(const char * path, const char * shortcut);
     void EnableItem(int tag );
     void DisableItem(int tag);
+    void ClickItem(const char * path);
     void OnItem(const char * path);
     void OffItem(const char * path);
     void MixedItem(const char * path);

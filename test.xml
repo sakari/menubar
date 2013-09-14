@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="Tests" package="tests" version="1.0.0" company="example" />
+	<app file="Validation" main="TestMain" path="build" />
+
+	<source path="test" />
+
+    <haxeflag name="-D debug" if="debug"/>
+
+	<haxelib name="openfl" />
+	<haxelib name="munit" />
+</project>

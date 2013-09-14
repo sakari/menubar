@@ -142,6 +142,15 @@ namespace menubar {
     [item setState: state];
   }
 
+  void ClickItem(const char * path) {
+      NSLog(@"Clicked %s", path);
+      NSMenuItem * item = GetItem(path);
+      if([target validateMenuItem: item]) {
+          NSMenu * m = [item menu];
+          [m performActionForItemAtIndex: [m indexOfItem: item]];
+      }
+  }
+  
   void OnItem(const char * path) {
     SetState(path, NSOnState);
   }

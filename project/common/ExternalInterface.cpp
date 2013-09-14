@@ -35,6 +35,11 @@ static value addMenuItem(value path, value shortcut) {
 }
 DEFINE_PRIM (addMenuItem, 2);
 
+static void clickItem(value path) {
+    ClickItem(val_get_string(path));
+}
+DEFINE_PRIM (clickItem, 1);
+
 static void onItem(value path) {
     OnItem(val_get_string(path));
 }

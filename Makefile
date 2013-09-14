@@ -1,8 +1,12 @@
 ndll:
 	cd project && haxelib run hxcpp Build.xml mac
 
+example: ndll
+	cd example && openfl test cpp -debug -Ddebug
+
 test: ndll
-	cd MenuTest && openfl test cpp -debug -Ddebug
+	haxelib run munit gen
+	openfl test cpp -debug -Ddebug
 
 all: ndll
 

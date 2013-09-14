@@ -2,7 +2,7 @@
 
 Create menus to the main menubar of the application from openfl.
 
-Supports only OSX now as I don't have any other platforms. Pull request welcome.
+Supports only OSX now as I don't have any other platforms. Pull requests welcome.
 
 ## Features
 
@@ -29,6 +29,12 @@ See the test app at `MenuTest/Source/Main.hx` for details
 
 ## Building the test app
     
+    make example
+
+## Run tests
+
+The tests require massive unit for running.
+
     make test
 
 ## License
